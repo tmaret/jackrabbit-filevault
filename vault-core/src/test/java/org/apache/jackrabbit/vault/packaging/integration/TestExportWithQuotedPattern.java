@@ -77,7 +77,13 @@ public class TestExportWithQuotedPattern extends IntegrationTestBase {
     }
 
     private String quote(String path) {
-        return Pattern.quote(path);
+        if (path == null) {
+            return null;
+        } else if (path.startsWith("/")) {
+            return "/" + Pattern.quote(path.substring(1));
+        } else {
+            return Pattern.quote(path);
+        }
     }
 
     private File assemblePackage(WorkspaceFilter filter)
